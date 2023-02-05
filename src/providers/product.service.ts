@@ -35,7 +35,7 @@ export class ProductService {
     }
     async findAll(): Promise<any> {
         try {
-            const data = await this.productModel.find().populate('owner')
+            const data = await this.productModel.find()
             return { status: 200, body: data }
 
         } catch (error) {

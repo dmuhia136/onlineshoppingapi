@@ -1,4 +1,4 @@
-import {Controller,Post,Body,Get} from '@nestjs/common'
+import {Controller,Post,Body,Get, Param} from '@nestjs/common'
 import { AuthProvider } from '../providers/auth.service';
 import { LoginDto, UserDto } from 'src/Dto';
 import {
@@ -44,4 +44,15 @@ export class AuthController{
    async GetAllUser():Promise<any>{
     return this.authProvider.getAllUsers()
    } 
-}
+
+   @Get('/:id')
+   @ApiCreatedResponse({
+    description: 'Get one users success',
+  })
+  @ApiBadRequestResponse({
+    description: 'Get one users not successful',
+  })
+   async GetUserById(@Param('id') id: string):Promise<any>{
+    return this.authProvider.getUserById(id)
+   } 
+  }

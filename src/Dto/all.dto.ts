@@ -90,3 +90,14 @@ export class ProductDto {
   })
   owner: string;
 }
+
+export class CategoryDto{
+  @IsString()
+  @IsNotEmpty({ message: 'Name is required' })
+  @ApiProperty({
+    description: 'Category name',
+    example: 'Fruits',
+  })
+  name: String;
+  
+}
