@@ -89,6 +89,12 @@ export class ProductDto {
     example: '63bbe284e12558b05e73d7c4',
   })
   owner: string;
+  @IsString()
+  @ApiProperty({
+    description: 'Category id',
+    example: '63bbe284e12558b05e73d7c4',
+  })
+  category: string;
 }
 
 export class CategoryDto{

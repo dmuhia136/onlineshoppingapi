@@ -18,7 +18,7 @@ export class ProductService {
     }
     async findById(id: String): Promise<any> {
         try {
-            const data = await this.productModel.findById(id).populate('owner');
+            const data = await this.productModel.findById(id).populate('owner').populate('category');
             return { status: 200, body: data }
         } catch (error) {
             return { status: 500, message: error.message }
@@ -27,7 +27,7 @@ export class ProductService {
     }
     async findUserProducts(id: string): Promise<any> {
         try {
-            const data = await this.productModel.find({ owner: id }).populate('owner');
+            const data = await this.productModel.find({ owner: id }).populate('owner').populate('category');
             return { status: 200, body: data }
         } catch (error) {
             return { status: 500, message: error.message }
@@ -35,7 +35,7 @@ export class ProductService {
     }
     async findAll(): Promise<any> {
         try {
-            const data = await this.productModel.find()
+            const data = await this.productModel.find().populate('owner').populate('category')
             return { status: 200, body: data }
 
         } catch (error) {
