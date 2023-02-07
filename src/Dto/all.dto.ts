@@ -101,9 +101,47 @@ export class CategoryDto{
   @IsString()
   @IsNotEmpty({ message: 'Name is required' })
   @ApiProperty({
-    description: 'Category name',
+    description: 'Shop name',
     example: 'Fruits',
   })
   name: String;
+  @IsString()
+  @IsNotEmpty({ message: 'Name is required' })
+  @ApiProperty({
+    description: 'Location name',
+    example: 'Fruits',
+  })
+  location: String;
   
+}
+
+export class ShopDto{
+  @IsString()
+  @IsNotEmpty({ message: 'Name is required' })
+  @ApiProperty({
+    description: 'Shop name',
+    example: 'Mello',
+  })
+  name: String;
+  @IsString()
+  @ApiProperty({
+    description: 'Owner id',
+    example: '63bbe284e12558b05e73d7c4',
+  })
+  owner: string;
+  @IsString()
+  @ApiProperty({
+    description: 'Owner id',
+    example: '63bbe284e12558b05e73d7c4',
+  })
+  products: string;
+}
+
+export class AddProductDto{
+  @IsString()
+  @ApiProperty({
+    description: 'Product id',
+    example: '63bbe284e12558b05e73d7c4',
+  })
+  product:string;
 }

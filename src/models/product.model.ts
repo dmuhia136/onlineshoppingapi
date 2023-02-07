@@ -11,13 +11,9 @@ export class Product {
     name: string;
     @Prop()
     price: number;
-    @Prop()
-    description: string;
-    @Prop()
-    count: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null })
     owner: User;
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category',default:null })
     category: Category;
 }
 
