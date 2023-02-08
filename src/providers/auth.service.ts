@@ -12,19 +12,23 @@ export class AuthProvider {
 
   //create user
   async createUser(userDto: UserDto): Promise<any> {
-    console.log(userDto.password);
-    let password = await userDto.password;
-    const hash = await bcrypt.hash(`${password}`, saltOrRounds);
-    const data = {
-      firstname: userDto.firstname,
-      lastname: userDto.lastname,
-      email: userDto.email.toLowerCase(),
-      password: hash,
-    };
-    // console.log(data);
+    try {
+      console.log(userDto.password);
+      let password = await userDto.password;
+      const hash = await bcrypt.hash(`${password}`, saltOrRounds);
+      const data = {
+        firstname: userDto.firstname,
+        lastname: userDto.lastname,
+        email: userDto.email.toLowerCase(),
+        password: hash,
+      };
 
-    const newUser = await new this.userModel(data).save();
-    return { status: 200, message: 'Sign up succesful', body: newUser };
+      const newUser = await new this.userModel(data).save();
+      newUser.delete(password);
+      return { status: 200, message: 'Sign up succesful', body: newUser };
+    } catch (error) {
+      return { status: 500, message: error.message };
+    }
   }
 
   //login user

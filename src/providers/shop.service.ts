@@ -17,6 +17,16 @@ export class ShopService {
     }
   }
 
+  async fetchShops(): Promise<any> {
+    try {
+      const response = await this.shopModel.find().populate("owner").populate("products");    
+      return { status: 200, body: response };
+    } catch (error) {
+      return { status: 500, message: error.message };
+    }
+  }
+
+
   async getShopById(id: String): Promise<any> {
     try {
       const response = await this.shopModel.find({ owner: id });
@@ -36,4 +46,6 @@ export class ShopService {
       return { status: 500, message: error.message };
     }
   }
+
+
 }

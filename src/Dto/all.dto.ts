@@ -124,6 +124,13 @@ export class ShopDto{
   })
   name: String;
   @IsString()
+  @IsNotEmpty({ message: 'Location is required' })
+  @ApiProperty({
+    description: 'Location name',
+    example: 'Mello',
+  })
+  location: String;
+  @IsString()
   @ApiProperty({
     description: 'Owner id',
     example: '63bbe284e12558b05e73d7c4',

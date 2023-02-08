@@ -16,7 +16,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('kilimall', app, document);
 
-  await app.listen(3000, '192.168.0.104');
+  await app.listen(3000, '192.168.0.108');
 
   if (module.hot) {
     module.hot.accept();

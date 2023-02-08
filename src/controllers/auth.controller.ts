@@ -55,4 +55,15 @@ export class AuthController{
    async GetUserById(@Param('id') id: string):Promise<any>{
     return this.authProvider.getUserById(id)
    } 
+
+   @Get('/:id')
+   @ApiCreatedResponse({
+    description: 'Get one users success',
+  })
+  @ApiBadRequestResponse({
+    description: 'Get one users not successful',
+  })
+   async GetAllUsers():Promise<any>{
+    return this.authProvider.getAllUsers()
+   } 
   }

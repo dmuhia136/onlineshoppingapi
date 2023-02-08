@@ -25,18 +25,35 @@ export class ShopController {
     return this.shopService.createShop(shop);
   }
 
+
+  @Get('/')
+  @ApiCreatedResponse({
+    description: 'Get all products',
+  })
+  @ApiBadRequestResponse({
+    description:
+      'No products were found or there was a problem with your connection',
+  })
+  async findAll(): Promise<any> {
+    return await this.shopService.fetchShops();
+  }
+
   @Get('/owner/:id')
-  @ApiCreatedResponse({description:"Your shop fetched"})
-  @ApiBadRequestResponse({description:"WE could not fetch your shops, check your connection"})
-  async fetchMyShop(@Param('id') id:String){
-    await this.shopService.getShopById(id)
+  @ApiCreatedResponse({ description: 'Your shop fetched' })
+  @ApiBadRequestResponse({
+    description: 'WE could not fetch your shops, check your connection',
+  })
+  async fetchMyShop(@Param('id') id: String) {
+    await this.shopService.getShopById(id);
   }
 
   @Put('/:id')
-  @ApiCreatedResponse({description:"Product added"})
-  @ApiBadRequestResponse({description:"WE could add product to your shop, check your connection"})
-  async addProduct(@Param('id') id:String,@Body() product:AddProductDto){
-    await this.shopService.addProduct(id,product)
+  @ApiCreatedResponse({ description: 'Product added' })
+  @ApiBadRequestResponse({
+    description: 'WE could add product to your shop, check your connection',
+  })
+  async addProduct(@Param('id') id: String, @Body() product: AddProductDto) {
+    await this.shopService.addProduct(id, product);
   }
 
 }
