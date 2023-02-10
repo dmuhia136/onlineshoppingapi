@@ -1,6 +1,6 @@
-import {Controller,Post,Body,Get, Param} from '@nestjs/common'
+import {Controller,Post,Body,Get, Param, Put, Patch} from '@nestjs/common'
 import { AuthProvider } from '../providers/auth.service';
-import { LoginDto, UserDto } from 'src/Dto';
+import { AddUserShopDto, LoginDto, UploadUserImageDto, UserDto } from 'src/Dto';
 import {
     ApiBadRequestResponse,
     ApiCreatedResponse,
@@ -19,7 +19,6 @@ export class AuthController{
     description: 'User could not be created',
   })
    async createUser(@Body() user:UserDto):Promise<any>{
-    console.log(user);
     return this.authProvider.createUser(user)
    }    
 
@@ -65,5 +64,28 @@ export class AuthController{
   })
    async GetAllUsers():Promise<any>{
     return this.authProvider.getAllUsers()
+   } 
+
+
+   @Patch('/image/:id')
+   @ApiCreatedResponse({
+    description: 'Get one users success',
+  })
+  @ApiBadRequestResponse({
+    description: 'Get one users not successful',
+  })
+   async UpdateUserImage(@Param('id') id: string,@Body() body:UploadUserImageDto):Promise<any>{
+    return this.authProvider.UpdateUserImage(id,body)
+   } 
+
+   @Patch('/shop/:id')
+   @ApiCreatedResponse({
+    description: 'Get one users success',
+  })
+  @ApiBadRequestResponse({
+    description: 'Get one users not successful',
+  })
+   async AddUserShop(@Param('id') id: string,@Body() body:AddUserShopDto):Promise<any>{
+    return this.authProvider.AddUserShop(id,body)
    } 
   }

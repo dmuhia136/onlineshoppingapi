@@ -48,6 +48,18 @@ export class ProductController {
     return await this.productService.findUserProducts(id);
   }
 
+  @Get('category/:id') 
+  @ApiCreatedResponse({
+   description: 'Get user products',
+ })
+ @ApiBadRequestResponse({
+   description:
+     'No products were found or there was a problem with your connection',
+ })
+ async findByCategory(@Param('id') id: string): Promise<any> {
+   return await this.productService.findByCategory(id);
+ }
+
   @Get('/')
   @ApiCreatedResponse({
     description: 'Get all products',

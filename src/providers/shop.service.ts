@@ -19,7 +19,7 @@ export class ShopService {
 
   async fetchShops(): Promise<any> {
     try {
-      const response = await this.shopModel.find().populate("owner").populate("products");    
+      const response = await this.shopModel.find().populate({path:"owner",populate:{path:"shop"}});    
       return { status: 200, body: response };
     } catch (error) {
       return { status: 500, message: error.message };

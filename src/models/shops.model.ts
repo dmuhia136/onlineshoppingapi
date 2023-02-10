@@ -13,8 +13,7 @@ export class Shop {
     location: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null })
     owner: User;
-    @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Product',default:null }])
-    products: Product;
+  
 }
 
 export const ShopSchema = SchemaFactory.createForClass(Shop); 

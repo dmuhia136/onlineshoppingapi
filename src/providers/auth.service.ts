@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { LoginDto, UserDto } from 'src/Dto';
+import { AddUserShopDto, LoginDto, UploadUserImageDto, UserDto } from 'src/Dto';
 import { User, UserDocument } from 'src/models/user.model';
 import * as bcrypt from 'bcrypt';
 const saltOrRounds = 10;
@@ -23,8 +23,8 @@ export class AuthProvider {
         password: hash,
       };
 
-      const newUser = await new this.userModel(data).save();
-      newUser.delete(password);
+      const newUser =  await new this.userModel(data).save();
+      console.log(newUser);
       return { status: 200, message: 'Sign up succesful', body: newUser };
     } catch (error) {
       return { status: 500, message: error.message };
@@ -34,7 +34,7 @@ export class AuthProvider {
   //login user
   async loginUser(login: LoginDto): Promise<any> {
     try {
-      const user = await this.userModel.findOne({ email: login.email });
+      const user = await this.userModel.findOne({ email: login.email }).populate('shop');
       if (!user) {
         return { status: false, message: 'User not found' };
       }
@@ -50,15 +50,39 @@ export class AuthProvider {
     }
   }
   async getAllUsers(): Promise<any | undefined> {
-    const data = await this.userModel.find();
+    const data = await this.userModel.find().populate("shop");
     return { status: 200, message: 'User fetch succesful', body: data };
   }
   async getUserById(id): Promise<any> {
     try {
-      const data = await this.userModel.findById(id);
+      const data =await this.userModel.findById(id).populate({path:"shop",populate:{path:"owner"}});
       return { status: true, body: data };
     } catch (e) {
       return { status: false, message: e.message };
     }
+  }
+
+  async UpdateUserImage(id:String, body:UploadUserImageDto):Promise<any>{
+    try {
+    await this.userModel.findByIdAndUpdate(id,{
+        $set:{profileimage: body.profileimage}
+      })
+      return {status:true,message:"Image uploaded"}
+    } catch (error) {
+      return { status: false, message: error.message };
+      
+    }
+  }
+
+  async AddUserShop(id:String, body:AddUserShopDto):Promise<any>{
+    try {
+      await this.userModel.findByIdAndUpdate(id,{
+          $set:{shop: body.shop}
+        })
+        return {status:true,message:"Shop added"}
+      } catch (error) {
+        return { status: false, message: error.message };
+        
+      }
   }
 }

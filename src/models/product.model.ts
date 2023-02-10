@@ -11,10 +11,13 @@ export class Product {
     name: string;
     @Prop()
     price: number;
+    @Prop({default:''})
+    imageurl: string;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User',default:null })
     owner: User;
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category',default:null })
     category: Category;
+    
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product); 
